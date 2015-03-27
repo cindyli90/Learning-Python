@@ -1,0 +1,114 @@
+mbamlite.exe /scan --QS
+mbamlite.exe /scan [path]
+mbamlite.exe /scan --exclusions=[path] --QS
+mbamlite.exe /scan --exclusions=[path] [path]
+mbamlite.exe /scan --exclusions=default --QS
+mbamlite.exe /scan --exclusions=default [path]
+mbamlite.exe /scan --action=list --QS
+mbamlite.exe /scan --action=list [path]
+mbamlite.exe /scan --action=list --exclusions=[path] --QS
+mbamlite.exe /scan --action=list --exclusions=[path] [path]
+mbamlite.exe /scan --action=list --exclusions=default --QS
+mbamlite.exe /scan --action=list --exclusions=default [path]
+mbamlite.exe /scan --action=log --QS
+mbamlite.exe /scan --action=log [path]
+mbamlite.exe /scan --action=log --exclusions=[path] --QS
+mbamlite.exe /scan --action=log --exclusions=[path] [path]
+mbamlite.exe /scan --action=log --exclusions=default --QS
+mbamlite.exe /scan --action=log --exclusions=default [path]
+mbamlite.exe /scan --action=ignore --QS
+mbamlite.exe /scan --action=ignore [path]
+mbamlite.exe /scan --action=ignore --exclusions=[path] --QS
+mbamlite.exe /scan --action=ignore --exclusions=[path] [path]
+mbamlite.exe /scan --action=ignore --exclusions=default --QS
+mbamlite.exe /scan --action=ignore --exclusions=default [path]
+mbamlite.exe /scan --action=delete --QS
+mbamlite.exe /scan --action=delete [path]
+mbamlite.exe /scan --action=delete --exclusions=[path] --QS
+mbamlite.exe /scan --action=delete --exclusions=[path] [path]
+mbamlite.exe /scan --action=delete --exclusions=default --QS
+mbamlite.exe /scan --action=delete --exclusions=default [path]
+mbamlite.exe /scan --action=copy --QS
+mbamlite.exe /scan --action=copy [path]
+mbamlite.exe /scan --action=copy --exclusions=[path] --QS
+mbamlite.exe /scan --action=copy --exclusions=[path] [path]
+mbamlite.exe /scan --action=copy --exclusions=default --QS
+mbamlite.exe /scan --action=copy --exclusions=default [path]
+mbamlite.exe /scan --action=copy --destination --QS
+mbamlite.exe /scan --action=copy --destination [path]
+mbamlite.exe /scan --action=copy --destination --exclusions=[path] --QS
+mbamlite.exe /scan --action=copy --destination --exclusions=[path] [path]
+mbamlite.exe /scan --action=copy --destination --exclusions=default --QS
+mbamlite.exe /scan --action=copy --destination --exclusions=default [path]
+mbamlite.exe /scan --action=move --QS
+mbamlite.exe /scan --action=move [path]
+mbamlite.exe /scan --action=move --exclusions=[path] --QS
+mbamlite.exe /scan --action=move --exclusions=[path] [path]
+mbamlite.exe /scan --action=move --exclusions=default --QS
+mbamlite.exe /scan --action=move --exclusions=default [path]
+mbamlite.exe /scan --action=move --destination --QS
+mbamlite.exe /scan --action=move --destination [path]
+mbamlite.exe /scan --action=move --destination --exclusions=[path] --QS
+mbamlite.exe /scan --action=move --destination --exclusions=[path] [path]
+mbamlite.exe /scan --action=move --destination --exclusions=default --QS
+mbamlite.exe /scan --action=move --destination --exclusions=default [path]
+mbamlite.exe /scan --action=remove --QS
+mbamlite.exe /scan --action=remove [path]
+mbamlite.exe /scan --action=remove --exclusions=[path] --QS
+mbamlite.exe /scan --action=remove --exclusions=[path] [path]
+mbamlite.exe /scan --action=remove --exclusions=default --QS
+mbamlite.exe /scan --action=remove --exclusions=default [path]
+mbamlite.exe /scan --interactive
+mbamlite.exe /scan --interactive --exclusions=[path]
+mbamlite.exe /scan --interactive --exclusions=default
+mbamlite.exe /scan --interactive --action=list
+mbamlite.exe /scan --interactive --action=list --exclusions=[path]
+mbamlite.exe /scan --interactive --action=list --exclusions=default
+mbamlite.exe /scan --interactive --action=log
+mbamlite.exe /scan --interactive --action=log --exclusions=[path]
+mbamlite.exe /scan --interactive --action=log --exclusions=default
+mbamlite.exe /scan --interactive --action=ignore
+mbamlite.exe /scan --interactive --action=ignore --exclusions=[path]
+mbamlite.exe /scan --interactive --action=ignore --exclusions=default
+mbamlite.exe /scan --interactive --action=remove
+mbamlite.exe /scan --interactive --action=remove --exclusions=[path]
+mbamlite.exe /scan --interactive --action=remove --exclusions=default
+mbamlite.exe /scan --interactive --action=user
+mbamlite.exe /scan --interactive --action=user --exclusions=[path]
+mbamlite.exe /scan --interactive --action=user --exclusions=default
+mbamlite.exe /scan --interactive --wait
+mbamlite.exe /scan --interactive --wait --exclusions=[path]
+mbamlite.exe /scan --interactive --wait --exclusions=default
+mbamlite.exe /scan --interactive --wait --action=list
+mbamlite.exe /scan --interactive --wait --action=list --exclusions=[path]
+mbamlite.exe /scan --interactive --wait --action=list --exclusions=default
+mbamlite.exe /scan --interactive --wait --action=log
+mbamlite.exe /scan --interactive --wait --action=log --exclusions=[path]
+mbamlite.exe /scan --interactive --wait --action=log --exclusions=default
+mbamlite.exe /scan --interactive --wait --action=ignore
+mbamlite.exe /scan --interactive --wait --action=ignore --exclusions=[path]
+mbamlite.exe /scan --interactive --wait --action=ignore --exclusions=default
+mbamlite.exe /scan --interactive --wait --action=remove
+mbamlite.exe /scan --interactive --wait --action=remove --exclusions=[path]
+mbamlite.exe /scan --interactive --wait --action=remove --exclusions=default
+mbamlite.exe /scan --interactive --wait --action=user
+mbamlite.exe /scan --interactive --wait --action=user --exclusions=[path]
+mbamlite.exe /scan --interactive --wait --action=user --exclusions=default
+mbamlite.exe /scan --interactive --terminate
+mbamlite.exe /scan --interactive --terminate --exclusions=[path]
+mbamlite.exe /scan --interactive --terminate --exclusions=default
+mbamlite.exe /scan --interactive --terminate --action=list
+mbamlite.exe /scan --interactive --terminate --action=list --exclusions=[path]
+mbamlite.exe /scan --interactive --terminate --action=list --exclusions=default
+mbamlite.exe /scan --interactive --terminate --action=log
+mbamlite.exe /scan --interactive --terminate --action=log --exclusions=[path]
+mbamlite.exe /scan --interactive --terminate --action=log --exclusions=default
+mbamlite.exe /scan --interactive --terminate --action=ignore
+mbamlite.exe /scan --interactive --terminate --action=ignore --exclusions=[path]
+mbamlite.exe /scan --interactive --terminate --action=ignore --exclusions=default
+mbamlite.exe /scan --interactive --terminate --action=remove
+mbamlite.exe /scan --interactive --terminate --action=remove --exclusions=[path]
+mbamlite.exe /scan --interactive --terminate --action=remove --exclusions=default
+mbamlite.exe /scan --interactive --terminate --action=user
+mbamlite.exe /scan --interactive --terminate --action=user --exclusions=[path]
+mbamlite.exe /scan --interactive --terminate --action=user --exclusions=default
