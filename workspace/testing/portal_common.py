@@ -5,7 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
 import time
-import common, CC
+import common, info
 
 def select_qty(browser, qty):
     elem_qty = browser.find_element_by_id('cart_subscription_attributes_cart_items_attributes_0_charges_attributes_1_quantity')
@@ -88,7 +88,7 @@ def diff_delivery_info(browser, click, user):
     
 def payment_info(browser):
     
-    new_CC = CC.CCinfo()
+    new_CC = info.CCInfo()
     
     # entering iframe
     browser.switch_to.frame("z_hppm_iframe")
@@ -128,6 +128,8 @@ def review_your_data(browser):
     
     elem_buy_now = browser.find_element_by_xpath('//*[@id="buy-now-button"]/div/div/button')
     elem_buy_now.click()
+    
+    common.explicit_wait_until(browser, 15, '//*[contains(text(), "Thank you for your order!")]')
   
         
 def portal_activate(browser):
@@ -172,10 +174,8 @@ def portal_activate(browser):
 #         browser.quit()
               
     
-def portal_purchase(browser, user):
-    
-    qty = '10'
-    
+def portal_purchase(browser, user, qty):
+      
     select_qty(browser, qty)
     billing_info(browser, True, user)      
     payment_info(browser)
