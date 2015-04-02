@@ -52,25 +52,25 @@ def check_subscription(self, browser, user):
     full_name = ''.join([user.first_name, ' ', user.last_name])
     
     if elem_bill_to.text != full_name:
-        self.verify.append("Bill To: %s does not match user name: %s") % (elem_bill_to.text, full_name) 
+        self.verify.append(("Bill To: %s does not match user name: %s") % (elem_bill_to.text, full_name))
     
     #Check payment term
     elem_payment_term = browser.find_element_by_id('paymentTerm')
     
     if elem_payment_term.text != 'Due Upon Receipt':
-        self.verify.append("Payment method: %s does not match 'Due Upon Receipt'") % elem_payment_term.text 
+        self.verify.append(("Payment method: %s does not match 'Due Upon Receipt'") % elem_payment_term.text)
     
     #Check payment gateway
     elem_payment_gateway = browser.find_element_by_id('paymentGateway')
     
     if elem_payment_gateway.text != 'MALWAREBYTES - USD':
-        self.verify.append("Payment gateway: %s does not match 'MALWAREBYTES - USD'") % elem_payment_gateway.text 
+        self.verify.append(("Payment gateway: %s does not match 'MALWAREBYTES - USD'") % elem_payment_gateway.text)
      
     #Check currency
     elem_currency = browser.find_element_by_id('currency')
     
     if elem_currency.text != 'USD':
-        self.verify.append("Currency: %s does not match 'USD'") % elem_currency.text 
+        self.verify.append(("Currency: %s does not match 'USD'") % elem_currency.text)
     
     #Check card number
     elem_card_number = browser.find_element_by_xpath('//*/th[contains(.," Card Number: ")]/following-sibling::td')
