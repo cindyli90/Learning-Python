@@ -8,6 +8,7 @@ import time
 import common, info
 
 def select_qty(browser, qty):
+
     elem_qty = browser.find_element_by_id('cart_subscription_attributes_cart_items_attributes_0_charges_attributes_1_quantity')
     elem_qty.clear()
     elem_qty.send_keys(qty)
@@ -86,9 +87,7 @@ def diff_delivery_info(browser, click, user):
         elem_continue_btn.click()
     
     
-def payment_info(browser):
-    
-    new_CC = info.CCInfo()
+def payment_info(browser, user):
     
     # entering iframe
     browser.switch_to.frame("z_hppm_iframe")
@@ -101,16 +100,16 @@ def payment_info(browser):
     #WebDriverWait(browser, 20).until(EC.text_to_be_present_in_element_value((By.XPATH, '//*[@id="hpm-container"]/div[1]/h2'),'Payment Information'))
 
     elem_CC = browser.find_element_by_xpath('//*[@id="HostedPaymentMethod_CreditCard_creditCardNumber"]')
-    elem_CC.send_keys(new_CC.num)
+    elem_CC.send_keys(user.new_CC.num)
     
-    elem_CC_month = browser.find_element_by_xpath("//*[@value='"+new_CC.month+"']")
+    elem_CC_month = browser.find_element_by_xpath("//*[@value='"+user.new_CC.month+"']")
     elem_CC_month.click()
     
-    elem_CC_year = browser.find_element_by_xpath("//*[@value='"+new_CC.year+"']")
+    elem_CC_year = browser.find_element_by_xpath("//*[@value='"+user.new_CC.year+"']")
     elem_CC_year.click()
     
     elem_CC_CVV = browser.find_element_by_name('field_cardSecurityCode')
-    elem_CC_CVV.send_keys(new_CC.CVV)
+    elem_CC_CVV.send_keys(user.new_CC.CVV)
     
     # come out of iframe
     browser.switch_to.default_content()
@@ -119,7 +118,7 @@ def payment_info(browser):
     elem_cont_payment.click()
     
 
-def review_your_data(browser):
+def review_your_data(browser, user):
     #give time for processing
     time.sleep(3)
     
@@ -130,7 +129,21 @@ def review_your_data(browser):
     elem_buy_now.click()
     
     common.explicit_wait_until(browser, 15, '//*[contains(text(), "Thank you for your order!")]')
-  
+    
+    #take down all the info for the subscription
+    elem_qty = browser.find_elements_by_xpath('//*/div[@class = "per-product-qty"]/p/span')[1]
+    elem_product = browser.find_element_by_xpath('//*/div[@class = "product-title"]/p/b')
+    elem_unitPrice = browser.find_element_by_xpath('//*/div[@class = "per-product-price"]/p/span')
+    elem_tax = browser.find_elements_by_xpath('//*/span[@class = "tax ng-binding"]')[1]
+    elem_total = browser.find_element_by_xpath('//*/span[@class = "totalprice ng-binding"]')
+    
+    #saving all the cart purchase information
+    user.new_sub.product_qty_unitPrice.append((elem_product.text, elem_qty.text, elem_unitPrice.text))
+    user.new_sub.tax = elem_tax.text
+    user.new_sub.total = elem_total.text
+    
+    print "Cart Purchased: "
+    user.new_sub.print_sub()
         
 def portal_activate(browser):
     
@@ -175,11 +188,13 @@ def portal_activate(browser):
               
     
 def portal_purchase(browser, user, qty):
-      
+    
+    user.new_sub.qty = qty
+    
     select_qty(browser, qty)
     billing_info(browser, True, user)      
-    payment_info(browser)
-    review_your_data(browser)
+    payment_info(browser, user)
+    review_your_data(browser, user)
   #  portal_activate(browser)
     
        

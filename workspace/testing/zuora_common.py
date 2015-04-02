@@ -25,7 +25,7 @@ def login(browser):
     # Exit iframe
     browser.switch_to.default_content()
     
-def check_subscription(browser, user):
+def check_subscription(self, browser, user):
     
     #check for the page to load by finding element
     elem_subscription = common.explicit_wait_until(browser, 5, '//*[@id="m1"]/dl/dd/a[contains(.,"Subscriptions")]')
@@ -36,7 +36,7 @@ def check_subscription(browser, user):
     # Goes to Zuora Subscription page
     elem_subscription.click()
     
-    customer_name = ''.join([user.first_name, ' ', user.last_name])
+    customer_name = user.comp_name
     print "Customer name: %s" % (customer_name)
     
     try:
@@ -45,21 +45,41 @@ def check_subscription(browser, user):
         assert False, "Customer not found"
     
     elem_customer.click()
-        
-        
-        
-    #common.bkpoint()
     
-    #refresh and check for customer name in table
-    # try:
-        # #elem_customer = common.refresh_and_check_text(browser, '//*[contains(text(), customer_name)]/a', customer_name)
-# #        elem_customer = common.refresh_and_check_text(browser, '//*[contains(@id,"customer.customerName")]', customer_name)
-    # except NoSuchElementException:
-        # assert "couldn't find customer"
+    #Check Bill To
+    elem_bill_to = browser.find_element_by_xpath('//*/table[@id = "basicInfo_table"]/tbody/tr/th[contains(.,"Bill")]/following-sibling::td')
     
-    #elem_customer.click()
-#    common.bkpoint()
-	
-      
-   
+    full_name = ''.join([user.first_name, ' ', user.last_name])
+    
+    if elem_bill_to.text != full_name:
+        self.verify.append("Bill To: %s does not match user name: %s") % (elem_bill_to.text, full_name) 
+    
+    #Check payment term
+    elem_payment_term = browser.find_element_by_id('paymentTerm')
+    
+    if elem_payment_term.text != 'Due Upon Receipt':
+        self.verify.append("Payment method: %s does not match 'Due Upon Receipt'") % elem_payment_term.text 
+    
+    #Check payment gateway
+    elem_payment_gateway = browser.find_element_by_id('paymentGateway')
+    
+    if elem_payment_gateway.text != 'MALWAREBYTES - USD':
+        self.verify.append("Payment gateway: %s does not match 'MALWAREBYTES - USD'") % elem_payment_gateway.text 
      
+    #Check currency
+    elem_currency = browser.find_element_by_id('currency')
+    
+    if elem_currency.text != 'USD':
+        self.verify.append("Currency: %s does not match 'USD'") % elem_currency.text 
+    
+    #Check card number
+    elem_card_number = browser.find_element_by_xpath('//*/th[contains(.," Card Number: ")]/following-sibling::td')
+    
+    #user_hidden_CC = ''.join(['*'*8, user.
+    
+    
+    elem_exp = browser.find_element_by_xpath('//*/th[contains(.," Expiration Date: ")]/following-sibling::td')
+    elem_card_holder = browser.find_element_by_xpath('//*/th[contains(.," Card Holder Name: ")]/following-sibling::td')
+    elem_last_transaction = browser.find_element_by_xpath('//*/th[contains(.," Last Transaction: ")]/following-sibling::td')
+        
+    common.verify_end(self)

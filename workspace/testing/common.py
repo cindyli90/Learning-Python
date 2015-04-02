@@ -7,7 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 
 import time
-
+import info
 
 def setup_user(diff, num):
     #diff is a boolean value to tell whether this user info is for the different delivery address
@@ -74,7 +74,14 @@ def refresh_and_find_element(browser, xpath, sec):
         
     #if exit loop without finding element, means element not found
     raise NoSuchElementException
+
+def verify_end(self):
+    #checks if verify is empty, if not empty, asserts and shows verification errors
     
+    assert not self.verify, \
+        "One or more verifies failed, see above:" 
+     
+     
 # def refresh_and_check_text(browser, xpath, text):    
     # # Refreshes the page and check for an element
 
@@ -109,20 +116,34 @@ def refresh_and_find_element(browser, xpath, sec):
     
 class User():
     def __init__(self, diff, num):
-        self.first_name = 'Cindy'
-        self.last_name = 'is Testing'
-        
+     
         self.comp_name = 'Cindy is Testing' 
-        # self.first_name = ('Diff Malware' if diff else 'Malware')
-        # self.last_name = 'Bytes'
+        self.first_name = ('Diff Malware' if diff else 'Malware')
+        self.last_name = 'Bytes'
         self.addr1 = '10 Almaden Blvd'
         self.city = 'San Jose'
         self.state = 'California'
         self.zipcode = '95113'
         self.country = 'United States'
         self.email = 'hydra-test-' + str(num) + '@yopmail.com'         
-            
-
+        
+        # instantiate a new sub
+        self.new_sub = Subscription()
+        self.new_CC = info.CCInfo()
+        
+class Subscription():
+    def __init__(self):
+        self.product_qty_unitPrice = [] #list of tuples (product, qty, unit price)
+        self.tax = ''
+        self.total = ''
+    
+    def print_sub(self):
+        for x,y,z in self.product_qty_unitPrice:
+            print "prod: %s \tqty: %s \tunit price: %s" % (x, y, z)
+        print "tax:\t%s" % self.tax
+        print "total:\t %s" % self.total
+        
+        
 ##--------------------------------------
 ##    IGNORE ME
 ##--------------------------------------

@@ -18,15 +18,17 @@ class MwbtestSelfServePurchaseMBAM(unittest.TestCase):
     def test_mwbtest_self_serve_purchase_MBAM(self):
       
         browser = self.browser
-  
-        user = common.User(False, '34')
+        
+        qty = '10'
+        
+        user = common.User(False, '56')
         portal_link = portal_common.portal_link_generator(False, 'MBAM-B')
         browser.get(portal_link)
-        portal_common.portal_purchase(browser, user, '10')
+        portal_common.portal_purchase(browser, user, qty)
 
         
-#        zuora_common.login(browser)
-#        zuora_common.check_subscription(browser, user)
+        zuora_common.login(browser)
+        zuora_common.check_subscription(self, browser, user)
         
     # def test_mwbtest_self_serve_purchase_MBAE(self):
        

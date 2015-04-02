@@ -69,8 +69,7 @@ class MwbtestSelfServePurchaseMBAM(unittest.TestCase):
         if not (tier_pricing):
             self.verify.append("Checking tiered pricing in hover box.... \nOne or more of the tiered price failed. \nThe price for 1-24 is: %s. \nThe price for 25-49 is: %s. \nThe price for 50-99 is: %s.\n" %(price_qty_1_24, price_qty_25_49, price_qty_50_99))
             
-        assert not self.verify, \
-        "One or more verifies failed, see above:" 
+        common.verify_end(self)
        
         print "PASSED"
                
@@ -172,7 +171,7 @@ class MwbtestSelfServePurchaseMBAM(unittest.TestCase):
          
         portal_common.select_qty(browser, '2')
         portal_common.billing_info(browser, True, billing_info)
-        portal_common.payment_info(browser)
+        portal_common.payment_info(browser, billing_info)
          
         time.sleep(3)
          
@@ -198,7 +197,7 @@ class MwbtestSelfServePurchaseMBAM(unittest.TestCase):
          
         portal_common.select_qty(browser, '2')
         portal_common.billing_info(browser, True, billing_info)
-        portal_common.payment_info(browser)
+        portal_common.payment_info(browser, billing_info)
          
         time.sleep(3)
          
