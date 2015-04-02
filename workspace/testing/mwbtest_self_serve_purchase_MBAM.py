@@ -21,7 +21,7 @@ class MwbtestSelfServePurchaseMBAM(unittest.TestCase):
         
         qty = '10'
         
-        user = common.User(False, '59')
+        user = common.User(False, '66')
         portal_link = portal_common.portal_link_generator(False, 'MBAM-B')
         browser.get(portal_link)
         portal_common.portal_purchase(browser, user, qty)

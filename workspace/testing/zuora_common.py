@@ -72,14 +72,32 @@ def check_subscription(self, browser, user):
     if elem_currency.text != 'USD':
         self.verify.append(("Currency: %s does not match 'USD'") % elem_currency.text)
     
-    #Check card number
-    elem_card_number = browser.find_element_by_xpath('//*/th[contains(.," Card Number: ")]/following-sibling::td')
+    #Check card number 
+    elem_card_number = browser.find_elements_by_xpath('//*/th[contains(.," Card Number: ")]/following-sibling::td/span')[1]
     
-    #user_hidden_CC = ''.join(['*'*8, user.
+    user_hidden_CC = ''.join(['*' * 12, user.new_CC.num[-4:]])
+
+    if elem_card_number.text != user_hidden_CC:
+        self.verify.append(("Card number: %s does not match user CC: %s") % (elem_card_number.text, user_hidden_CC))  
     
+    #Check expiration date
+    elem_exp = browser.find_elements_by_xpath('//*/th[contains(.," Expiration Date: ")]/following-sibling::td/span')[1]
     
-    elem_exp = browser.find_element_by_xpath('//*/th[contains(.," Expiration Date: ")]/following-sibling::td')
-    elem_card_holder = browser.find_element_by_xpath('//*/th[contains(.," Card Holder Name: ")]/following-sibling::td')
-    elem_last_transaction = browser.find_element_by_xpath('//*/th[contains(.," Last Transaction: ")]/following-sibling::td')
+    user_exp = ''.join([user.new_CC.month, '/', user.new_CC.year])
+    
+    if elem_exp.text != user_exp:
+        self.verify.append(("Expiry: %s does not match user expiry: %s") % (elem_exp.text, user_exp))    
+    
+    #Check card holder name 
+    elem_card_holder = browser.find_elements_by_xpath('//*/th[contains(.," Card Holder Name: ")]/following-sibling::td/span')[1]
+    
+    if elem_card_holder.text != full_name:
+        self.verify.append(("Card holder: %s does not match user name: %s") % (elem_card_holder.text, full_name))
+    
+    #check last transaction
+    elem_last_transaction = browser.find_elements_by_xpath('//*/th[contains(.," Last Transaction: ")]/following-sibling::td/span')[1]
+
+    if elem_last_transaction.text != 'Approved':
+        self.verify.append(("Last transaction: %s does not match 'Approved'") % elem_last_transaction.text)
         
     common.verify_end(self)
