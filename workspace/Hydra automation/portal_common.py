@@ -7,6 +7,7 @@ from selenium.webdriver.common.by import By
 import time
 
 def select_qty(browser, qty):
+	
     elem_qty = browser.find_element_by_id('cart_subscription_attributes_cart_items_attributes_0_charges_attributes_1_quantity')
     elem_qty.clear()
     elem_qty.send_keys(qty)

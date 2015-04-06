@@ -25,7 +25,7 @@ def login(browser):
     # Exit iframe
     browser.switch_to.default_content()
     
-def check_subscription(self, browser, user):
+def check_zuora(self, browser, user):
     
     #check for the page to load by finding element
     elem_subscription = common.explicit_wait_until(browser, 5, '//*[@id="m1"]/dl/dd/a[contains(.,"Subscriptions")]')
@@ -46,6 +46,14 @@ def check_subscription(self, browser, user):
     
     elem_customer.click()
     
+    check_zuora_Basic_Information(self, browser, user)
+    check_zuora_Billing_and_Payment_Info(self, browser, user)
+    check_zuora_Electronic_Payment_Methods(self, browser, user)
+    check_zuora_Invoice(self, browser, user)
+    
+    common.verify_end(self)
+    
+def check_zuora_Basic_Information(self, browser, user):
     #Check Bill To
     elem_bill_to = browser.find_element_by_xpath('//*/table[@id = "basicInfo_table"]/tbody/tr/th[contains(.,"Bill")]/following-sibling::td')
     
@@ -53,7 +61,9 @@ def check_subscription(self, browser, user):
     
     if elem_bill_to.text != full_name:
         self.verify.append(("Bill To: %s does not match user name: %s") % (elem_bill_to.text, full_name))
-    
+        
+def check_zuora_Billing_and_Payment_Info(self, browser, user):
+        
     #Check payment term
     elem_payment_term = browser.find_element_by_id('paymentTerm')
     
@@ -71,7 +81,12 @@ def check_subscription(self, browser, user):
     
     if elem_currency.text != 'USD':
         self.verify.append(("Currency: %s does not match 'USD'") % elem_currency.text)
-    
+        
+        
+def check_zuora_Electronic_Payment_Methods(self, browser, user):
+
+    full_name = ''.join([user.first_name, ' ', user.last_name])
+
     #Check card number 
     elem_card_number = browser.find_elements_by_xpath('//*/th[contains(.," Card Number: ")]/following-sibling::td/span')[1]
     
@@ -99,5 +114,33 @@ def check_subscription(self, browser, user):
 
     if elem_last_transaction.text != 'Approved':
         self.verify.append(("Last transaction: %s does not match 'Approved'") % elem_last_transaction.text)
+
+def check_zuora_Invoice(self, browser, user):
+    
+    #click on invoice
+    elem_invoice = browser.find_element_by_partial_link_text('INV')
+    elem_invoice.click()
+    
+    #check invoice amount
+    elem_invoice_amount = browser.find_element_by_xpath('//*/strong[contains(.,"Invoice Amount")]/following-sibling::span')
+    
+    if user.new_sub.total[1:] != elem_invoice_amount.text:
+        self.verify.append('Invoice amount: %s does not match cart amount: %s' % (elem_invoice_amount.text, user.new_sub.total))
+       
+    #check payments
+    elem_payments = browser.find_element_by_xpath('//*/strong[contains(.,"Payments")]/following-sibling::span')
+    
+    if user.new_sub.total[1:] != elem_payments.text:
+        self.verify.append('Payment: %s does not match cart amount: %s' % (elem_payments.text, user.new_sub.total))
         
-    common.verify_end(self)
+    #check outstanding balance
+    elem_outstanding_balance = browser.find_element_by_xpath('//*/strong[contains(.,"Outstanding Balance")]/following-sibling::span')
+    
+    if elem_outstanding_balance.text != '0.00':
+        self.verify.append('Outstanding Balance: %s is not 0.00' % elem_payments.text)    
+    
+    #check tax
+    elem_tax = browser.find_element_by_xpath('//*[@id = "idOfTaxDetailTable"]/following-sibling::font')
+    
+    if user.new_sub.tax[1:] != elem_tax.text.strip():
+        self.verify.append('Tax: %s does not match cart amount: %s' % (elem_tax.text, user.new_sub.tax))    

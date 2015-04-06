@@ -20,15 +20,24 @@ class MwbtestSelfServePurchaseMBAM(unittest.TestCase):
         browser = self.browser
         
         qty = '10'
+        email_num = '74'
         
-        user = common.User(False, '66')
-        portal_link = portal_common.portal_link_generator(False, 'MBAM-B')
-        browser.get(portal_link)
-        portal_common.portal_purchase(browser, user, qty)
+        user = common.User(False, email_num)
+        # portal_link = portal_common.portal_link_generator(False, 'MBAM-B')
+        # browser.get(portal_link)
+        # portal_common.portal_purchase(browser, user, qty)
 
         
+        # zuora_common.login(browser)
+        # zuora_common.check_zuora(self, browser, user)
+        
+        user.new_sub.total = "$299.50"
+        user.new_sub.tax = "$0.01"
+        
         zuora_common.login(browser)
-        zuora_common.check_subscription(self, browser, user)
+        time.sleep(3)
+        browser.get('https://apisandbox.zuora.com/apps/CustomerAccount.do?method=view&id=2c92c0fb4c75067f014c8178e79d716d')
+        zuora_common.check_zuora_Invoice(self, browser, user)
         
     # def test_mwbtest_self_serve_purchase_MBAE(self):
        
