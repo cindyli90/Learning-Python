@@ -3,6 +3,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
 
 import time
 import common, info
@@ -117,6 +118,15 @@ def payment_info(browser, user):
     elem_cont_payment = browser.find_element_by_xpath('//*[@id="submit-hpm-button"]/div/div/button')
     elem_cont_payment.click()
     
+    # check if there is a CC validation error
+    try:
+        elem_process_error = browser.find_element_by_xpath('//*[contains(text(),"Error processing transaction")]')
+    except NoSuchElementException: #no error found, return
+        return
+
+    assert not elem_process_error, \
+        "%s" % elem_process_error.text
+    
 
 def review_your_data(browser, user):
     #give time for processing
@@ -130,6 +140,14 @@ def review_your_data(browser, user):
     
     common.explicit_wait_until(browser, 15, '//*[contains(text(), "Thank you for your order!")]')
     
+    
+        
+def check_review_your_data(browser, user):
+
+    elem_page = browser.find_element_by_xpath('//*[contains(text(), "Thank you for your order!")]')
+    assert elem_page, \
+        "not on Thank you for your order! page"
+        
     #take down all the info for the subscription
     elem_qty = browser.find_elements_by_xpath('//*/div[@class = "per-product-qty"]/p/span')[1]
     elem_product = browser.find_element_by_xpath('//*/div[@class = "product-title"]/p/b')
@@ -144,7 +162,10 @@ def review_your_data(browser, user):
     
     print "Cart Purchased: "
     user.new_sub.print_sub()
-        
+    
+    assert (float(elem_qty.text) * float (elem_unitPrice.text[1:]) + float(elem_tax.text[1:])) == float(user.new_sub.total[1:]), \
+        "total price is incorrect"
+
 def portal_activate(browser):
     
 #   try:

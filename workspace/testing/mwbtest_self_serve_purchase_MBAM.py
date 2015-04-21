@@ -3,13 +3,18 @@ import portal_common, common, zuora_common
 
 from selenium import webdriver
 
+import testing
+
 class MwbtestSelfServePurchaseMBAM(unittest.TestCase):
     
     def setUp(self):
         self.browser = webdriver.Firefox()
-        self.browser.implicitly_wait(30)
+        self.browser.implicitly_wait(20)
         
         self.verify = []
+        
+        #set up num for emails
+        self.email_num = 94
         
         print "^" * 100
         print "Currently testing: %s" % (self._testMethodName)
@@ -20,41 +25,37 @@ class MwbtestSelfServePurchaseMBAM(unittest.TestCase):
         browser = self.browser
         
         qty = '10'
-        email_num = '74'
-        
-        user = common.User(False, email_num)
-        # portal_link = portal_common.portal_link_generator(False, 'MBAM-B')
-        # browser.get(portal_link)
-        # portal_common.portal_purchase(browser, user, qty)
 
-        
-        # zuora_common.login(browser)
-        # zuora_common.check_zuora(self, browser, user)
-        
-        user.new_sub.total = "$299.50"
-        user.new_sub.tax = "$0.01"
-        
-        zuora_common.login(browser)
-        time.sleep(3)
-        browser.get('https://apisandbox.zuora.com/apps/CustomerAccount.do?method=view&id=2c92c0fb4c75067f014c8178e79d716d')
-        zuora_common.check_zuora_Invoice(self, browser, user)
-        
-    # def test_mwbtest_self_serve_purchase_MBAE(self):
+        user = common.User(False, str(self.email_num))        
+            
+        portal_link = portal_common.portal_link_generator(False, 'MBAM-B') 
+        browser.get(portal_link)
+        portal_common.portal_purchase(browser, user, qty)       
+
+    def test_mwbtest_self_serve_purchase_MBAE(self):
        
-        # browser = self.browser
-   
-        # portal_link = portal_common.portal_link_generator(False, 'MBAE-B')
-        # browser.get(portal_link)
-        # portal_common.portal_purchase(browser)      
-# 
-#     def test_mwbtest_self_serve_purchase_MBES(self):
-#        
-#         browser = self.browser
-#    
-#         portal_link = portal_common.portal_link_generator(False, 'MBES-B')
-#         browser.get(portal_link)
-#         portal_common.portal_purchase(browser)     
-    
+        browser = self.browser
+        
+        qty = '10'
+
+        user = common.User(False, str(self.email_num))        
+            
+        portal_link = portal_common.portal_link_generator(False, 'MBAE-B') 
+        browser.get(portal_link)
+        portal_common.portal_purchase(browser, user, qty)       
+        
+    def test_mwbtest_self_serve_purchase_MBES(self):
+       
+        browser = self.browser
+        
+        qty = '10'
+
+        user = common.User(False, str(self.email_num))        
+            
+        portal_link = portal_common.portal_link_generator(False, 'MBES-B') 
+        browser.get(portal_link)
+        portal_common.portal_purchase(browser, user, qty)       
+        
     def tearDown(self):
         #pass
         

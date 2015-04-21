@@ -81,8 +81,10 @@ def verify_end(self):
     assert not self.verify, \
         "One or more verifies failed, see above:" 
      
-     
-# def refresh_and_check_text(browser, xpath, text):    
+  
+
+    
+    # def refresh_and_check_text(browser, xpath, text):    
     # # Refreshes the page and check for an element
 
     # sec_to_check = 60 # last time we had an issue with Zuora updating, it took about 8 minutes to refresh
